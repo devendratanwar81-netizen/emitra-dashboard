@@ -1,182 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>e-Mitra Dashboard - Rajasthan</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<style>
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7fa; }
-.sidebar { background-color: #007bff; color: white; min-height: 100vh; position: fixed; width: 250px; padding-top: 20px; }
-.sidebar .nav-link { color: white; padding: 10px 20px; }
-.sidebar .nav-link:hover { background-color: #0056b3; }
-.main-content { margin-left: 250px; padding: 20px; }
-.header { background-color: white; padding: 15px; border-bottom: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-.card { border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s; }
-.card:hover { transform: translateY(-5px); }
-.service-icon { font-size: 2rem; color: #007bff; }
-.profile-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; }
-.footer { background-color: #343a40; color: white; text-align: center; padding: 10px; position: fixed; bottom: 0; width: calc(100% - 250px); }
-.dynamic-fields { display: none; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Form</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0px 0px 10px #888;
+    }
+    .group { margin-bottom: 15px; }
+    label { font-weight: bold; }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      font-size: 17px;
+      background: black;
+      color: white;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover { background: #444; }
+  </style>
 </head>
+
 <body>
 
-<div class="sidebar">
-<h4 class="text-center mb-4">e-Mitra Panel</h4>
-<ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link" href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-<li class="nav-item"><a class="nav-link" href="#services"><i class="fas fa-cogs"></i> Services</a></li>
-<li class="nav-item"><a class="nav-link" href="#profile"><i class="fas fa-user"></i> My Profile</a></li>
-<li class="nav-item"><a class="nav-link" href="#apply"><i class="fas fa-plus-circle"></i> Apply Now</a></li>
-<li class="nav-item"><a class="nav-link" href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
-</ul>
+<div class="container">
+  <h2>Application Form</h2>
+
+  <form id="applicationForm">
+
+    <div class="group">
+      <label>Service Type</label>
+      <select id="serviceType" required>
+        <option value="" disabled selected>Select Service</option>
+        <option>Birth Certificate</option>
+        <option>Death Certificate</option>
+        <option>Marriage Certificate</option>
+        <option>Bank Account</option>
+        <option>Insurance Service</option>
+      </select>
+    </div>
+
+    <div class="group">
+      <label>Full Name</label>
+      <input type="text" id="name" required>
+    </div>
+
+    <div class="group">
+      <label>Email</label>
+      <input type="email" id="email" required>
+    </div>
+
+    <div class="group">
+      <label>Phone</label>
+      <input type="text" id="phone" required>
+    </div>
+
+    <div class="group">
+      <label>Address</label>
+      <textarea id="address" rows="3" required></textarea>
+    </div>
+
+    <!-- Birth -->
+    <div id="birthFields" style="display:none;">
+      <h3>Birth Details</h3>
+      <div class="group">
+        <label>Date of Birth</label>
+        <input type="date" id="dob">
+      </div>
+      <div class="group">
+        <label>Place of Birth</label>
+        <input type="text" id="placeOfBirth">
+      </div>
+    </div>
+
+    <!-- Death -->
+    <div id="deathFields" style="display:none;">
+      <h3>Death Details</h3>
+      <div class="group">
+        <label>Date of Death</label>
+        <input type="date" id="dod">
+      </div>
+      <div class="group">
+        <label>Place of Death</label>
+        <input type="text" id="placeOfDeath">
+      </div>
+    </div>
+
+    <!-- Marriage -->
+    <div id="marriageFields" style="display:none;">
+      <h3>Marriage Details</h3>
+      <div class="group">
+        <label>Spouse Name</label>
+        <input type="text" id="spouseName">
+      </div>
+      <div class="group">
+        <label>Marriage Date</label>
+        <input type="date" id="marriageDate">
+      </div>
+    </div>
+
+    <!-- Bank -->
+    <div id="bankFields" style="display:none;">
+      <h3>Bank Details</h3>
+      <div class="group">
+        <label>Bank Type</label>
+        <input type="text" id="bankType">
+      </div>
+      <div class="group">
+        <label>Account Type</label>
+        <input type="text" id="accountType">
+      </div>
+    </div>
+
+    <!-- Insurance -->
+    <div id="insuranceFields" style="display:none;">
+      <h3>Insurance Details</h3>
+      <div class="group">
+        <label>Insurance Type</label>
+        <input type="text" id="insuranceType">
+      </div>
+      <div class="group">
+        <label>Coverage Amount</label>
+        <input type="text" id="coverageAmount">
+      </div>
+    </div>
+
+    <button type="submit">Submit Application</button>
+  </form>
 </div>
 
-<div class="main-content">
 
-<div class="header">
-<h2>Welcome to e-Mitra Dashboard</h2>
-<p>Manage your government services efficiently.</p>
-</div>
+<!-- EmailJS Script -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
-<!-- APPLY FORM -->
-<section id="apply" class="mt-5">
-<h3>Apply for a Service</h3>
-<div class="card">
-<div class="card-body">
-
-<form id="applicationForm">
-<div class="mb-3">
-<label class="form-label">Service Type</label>
-<select class="form-select" id="serviceType" required>
-<option value="">Select Service</option>
-<option value="Birth Certificate">Birth Certificate</option>
-<option value="Death Certificate">Death Certificate</option>
-<option value="Marriage Certificate">Marriage Certificate</option>
-<option value="Bank Account">Open Bank Account</option>
-<option value="Insurance Service">Insurance Services</option>
-</select>
-</div>
-
-<!-- Common Fields -->
-<div class="mb-3"><label class="form-label">Full Name</label><input type="text" id="name" class="form-control" required></div>
-<div class="mb-3"><label class="form-label">Email</label><input type="email" id="email" class="form-control" required></div>
-<div class="mb-3"><label class="form-label">Phone</label><input type="tel" id="phone" class="form-control" required></div>
-<div class="mb-3"><label class="form-label">Address</label><textarea id="address" class="form-control" required></textarea></div>
-
-<!-- Service-specific fields -->
-<div id="birthFields" class="dynamic-fields">
-<div class="mb-3"><label class="form-label">Date of Birth</label><input type="date" id="dob" class="form-control"></div>
-<div class="mb-3"><label class="form-label">Place of Birth</label><input type="text" id="placeOfBirth" class="form-control"></div>
-</div>
-
-<div id="deathFields" class="dynamic-fields">
-<div class="mb-3"><label class="form-label">Date of Death</label><input type="date" id="dod" class="form-control"></div>
-<div class="mb-3"><label class="form-label">Place of Death</label><input type="text" id="placeOfDeath" class="form-control"></div>
-</div>
-
-<div id="marriageFields" class="dynamic-fields">
-<div class="mb-3"><label class="form-label">Spouse Name</label><input type="text" id="spouseName" class="form-control"></div>
-<div class="mb-3"><label class="form-label">Marriage Date</label><input type="date" id="marriageDate" class="form-control"></div>
-</div>
-
-<div id="bankFields" class="dynamic-fields">
-<div class="mb-3"><label class="form-label">Select Bank</label>
-<select class="form-select" id="bankType">
-<option value="">Select Bank</option>
-<option value="AU Small Finance Bank">AU Small Finance Bank</option>
-<option value="SBI">State Bank of India (SBI)</option>
-</select></div>
-<div class="mb-3"><label class="form-label">Account Type</label>
-<select class="form-select" id="accountType">
-<option value="">Select Type</option>
-<option value="Savings">Savings</option>
-<option value="Current">Current</option>
-</select></div>
-</div>
-
-<div id="insuranceFields" class="dynamic-fields">
-<div class="mb-3"><label class="form-label">Insurance Type</label>
-<select class="form-select" id="insuranceType">
-<option value="">Select Type</option>
-<option value="Health">Health Insurance</option>
-<option value="Life">Life Insurance</option>
-<option value="Vehicle">Vehicle Insurance</option>
-</select></div>
-<div class="mb-3"><label class="form-label">Coverage Amount (INR)</label><input type="number" id="coverageAmount" class="form-control"></div>
-</div>
-
-<button type="submit" class="btn btn-primary">Submit Application</button>
-</form>
-
-</div>
-</div>
-</section>
-
-</div>
-
-<div class="footer">
-<p>&copy; 2023 e-Mitra Rajasthan. All rights reserved. Powered by Government of Rajasthan</p>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-emailjs.init("q2bR1Di9tLcJVoIcQ"); // Public Key
+  // Your EmailJS Keys
+  const EMAILJS_SERVICE_ID = "service_zyytoqi";
+  const EMAILJS_TEMPLATE_ID = "template_vd4fwxi";
+  const EMAILJS_PUBLIC_KEY = "q2bR1Di9tLcJVoIcQ";
 
-// Show/hide service-specific fields
-function toggleFields() {
-    const service = document.getElementById('serviceType').value;
-    const allFields = ['birthFields', 'deathFields', 'marriageFields', 'bankFields', 'insuranceFields'];
-    allFields.forEach(f => document.getElementById(f).style.display = 'none');
+  emailjs.init(EMAILJS_PUBLIC_KEY);
 
-    if(service === 'Birth Certificate') document.getElementById('birthFields').style.display = 'block';
-    else if(service === 'Death Certificate') document.getElementById('deathFields').style.display = 'block';
-    else if(service === 'Marriage Certificate') document.getElementById('marriageFields').style.display = 'block';
-    else if(service === 'Bank Account') document.getElementById('bankFields').style.display = 'block';
-    else if(service === 'Insurance Service') document.getElementById('insuranceFields').style.display = 'block';
-}
+  function showFields() {
+    const s = document.getElementById("serviceType").value;
 
-document.getElementById('serviceType').addEventListener('change', toggleFields);
+    let all = ["birthFields","deathFields","marriageFields","bankFields","insuranceFields"];
+    all.forEach(x => document.getElementById(x).style.display = "none");
 
-document.getElementById("applicationForm").addEventListener("submit", function(e){
+    if (s === "Birth Certificate") document.getElementById("birthFields").style.display = "block";
+    if (s === "Death Certificate") document.getElementById("deathFields").style.display = "block";
+    if (s === "Marriage Certificate") document.getElementById("marriageFields").style.display = "block";
+    if (s === "Bank Account") document.getElementById("bankFields").style.display = "block";
+    if (s === "Insurance Service") document.getElementById("insuranceFields").style.display = "block";
+  }
+
+  document.getElementById("serviceType").addEventListener("change", showFields);
+
+  function val(id) {
+    const el = document.getElementById(id);
+    return el ? (el.value.trim() || "-") : "-";
+  }
+
+  document.getElementById("applicationForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    // Collect form data
-    let data = {
-        serviceType: document.getElementById('serviceType').value,
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        address: document.getElementById('address').value,
-        dob: document.getElementById('dob').value || '',
-        placeOfBirth: document.getElementById('placeOfBirth').value || '',
-        dod: document.getElementById('dod').value || '',
-        placeOfDeath: document.getElementById('placeOfDeath').value || '',
-        spouseName: document.getElementById('spouseName').value || '',
-        marriageDate: document.getElementById('marriageDate').value || '',
-        bankType: document.getElementById('bankType').value || '',
-        accountType: document.getElementById('accountType').value || '',
-        insuranceType: document.getElementById('insuranceType').value || '',
-        coverageAmount: document.getElementById('coverageAmount').value || '',
-        to_email: "Devendratanwar81@gmail.com",
-        subject: "New e-Mitra Application Submission"
+    const params = {
+      serviceType: val("serviceType"),
+      full_name: val("name"),
+      user_email: val("email"),
+      user_phone: val("phone"),
+      user_address: val("address"),
+
+      dob: val("dob"),
+      placeOfBirth: val("placeOfBirth"),
+
+      dod: val("dod"),
+      placeOfDeath: val("placeOfDeath"),
+
+      spouseName: val("spouseName"),
+      marriageDate: val("marriageDate"),
+
+      bankType: val("bankType"),
+      accountType: val("accountType"),
+
+      insuranceType: val("insuranceType"),
+      coverageAmount: val("coverageAmount")
     };
 
-    // Send email
-    emailjs.send("service_zyytoqi", "template_mbcun7u", data)
-    .then(() => {
-        alert("Application submitted successfully! Email sent to Devendra.");
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+      .then(() => {
+        alert("Application Submitted Successfully!");
         document.getElementById("applicationForm").reset();
-        toggleFields();
-    })
-    .catch(err => {
-        alert("Failed to send email. Please try again.");
+        showFields();
+      })
+      .catch((err) => {
+        alert("Failed to send email!");
         console.error(err);
-    });
-});
+      });
+  });
 </script>
 
 </body>
