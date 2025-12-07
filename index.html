@@ -36,7 +36,6 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 </div>
 
 <div class="main-content">
-
 <div class="header">
 <h2>Welcome to e-Mitra Dashboard</h2>
 <p>Manage your government services efficiently.</p>
@@ -144,28 +143,22 @@ document.getElementById('serviceType').addEventListener('change', toggleFields);
 document.getElementById("applicationForm").addEventListener("submit", function(e){
     e.preventDefault();
 
-    // Collect form data
-    let data = {
-        serviceType: document.getElementById('serviceType').value,
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        address: document.getElementById('address').value,
-        dob: document.getElementById('dob').value || '',
-        placeOfBirth: document.getElementById('placeOfBirth').value || '',
-        dod: document.getElementById('dod').value || '',
-        placeOfDeath: document.getElementById('placeOfDeath').value || '',
-        spouseName: document.getElementById('spouseName').value || '',
-        marriageDate: document.getElementById('marriageDate').value || '',
-        bankType: document.getElementById('bankType').value || '',
-        accountType: document.getElementById('accountType').value || '',
-        insuranceType: document.getElementById('insuranceType').value || '',
-        coverageAmount: document.getElementById('coverageAmount').value || '',
-        to_email: "Devendratanwar81@gmail.com",
-        subject: "New e-Mitra Application Submission"
-    };
+    // Collect all fields data, visible or not
+    let data = {};
+    const fields = [
+        'serviceType','name','email','phone','address',
+        'dob','placeOfBirth','dod','placeOfDeath',
+        'spouseName','marriageDate','bankType','accountType',
+        'insuranceType','coverageAmount'
+    ];
+    fields.forEach(f => {
+        const el = document.getElementById(f);
+        if(el) data[f] = el.value || '';
+    });
 
-    // Send email
+    data.to_email = "Devendratanwar81@gmail.com";
+    data.subject = "New e-Mitra Application Submission";
+
     emailjs.send("service_zyytoqi", "template_mbcun7u", data)
     .then(() => {
         alert("Application submitted successfully! Email sent to Devendra.");
