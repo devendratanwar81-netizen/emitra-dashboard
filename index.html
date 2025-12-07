@@ -7,7 +7,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
 <style>
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7fa; }
 .sidebar { background-color: #007bff; color: white; min-height: 100vh; position: fixed; width: 250px; padding-top: 20px; }
@@ -62,10 +61,53 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 </select>
 </div>
 
+<!-- Common Fields -->
 <div class="mb-3"><label class="form-label">Full Name</label><input type="text" id="name" class="form-control" required></div>
 <div class="mb-3"><label class="form-label">Email</label><input type="email" id="email" class="form-control" required></div>
 <div class="mb-3"><label class="form-label">Phone</label><input type="tel" id="phone" class="form-control" required></div>
 <div class="mb-3"><label class="form-label">Address</label><textarea id="address" class="form-control" required></textarea></div>
+
+<!-- Service-specific fields -->
+<div id="birthFields" class="dynamic-fields">
+<div class="mb-3"><label class="form-label">Date of Birth</label><input type="date" id="dob" class="form-control"></div>
+<div class="mb-3"><label class="form-label">Place of Birth</label><input type="text" id="placeOfBirth" class="form-control"></div>
+</div>
+
+<div id="deathFields" class="dynamic-fields">
+<div class="mb-3"><label class="form-label">Date of Death</label><input type="date" id="dod" class="form-control"></div>
+<div class="mb-3"><label class="form-label">Place of Death</label><input type="text" id="placeOfDeath" class="form-control"></div>
+</div>
+
+<div id="marriageFields" class="dynamic-fields">
+<div class="mb-3"><label class="form-label">Spouse Name</label><input type="text" id="spouseName" class="form-control"></div>
+<div class="mb-3"><label class="form-label">Marriage Date</label><input type="date" id="marriageDate" class="form-control"></div>
+</div>
+
+<div id="bankFields" class="dynamic-fields">
+<div class="mb-3"><label class="form-label">Select Bank</label>
+<select class="form-select" id="bankType">
+<option value="">Select Bank</option>
+<option value="AU Small Finance Bank">AU Small Finance Bank</option>
+<option value="SBI">State Bank of India (SBI)</option>
+</select></div>
+<div class="mb-3"><label class="form-label">Account Type</label>
+<select class="form-select" id="accountType">
+<option value="">Select Type</option>
+<option value="Savings">Savings</option>
+<option value="Current">Current</option>
+</select></div>
+</div>
+
+<div id="insuranceFields" class="dynamic-fields">
+<div class="mb-3"><label class="form-label">Insurance Type</label>
+<select class="form-select" id="insuranceType">
+<option value="">Select Type</option>
+<option value="Health">Health Insurance</option>
+<option value="Life">Life Insurance</option>
+<option value="Vehicle">Vehicle Insurance</option>
+</select></div>
+<div class="mb-3"><label class="form-label">Coverage Amount (INR)</label><input type="number" id="coverageAmount" class="form-control"></div>
+</div>
 
 <button type="submit" class="btn btn-primary">Submit Application</button>
 </form>
@@ -84,35 +126,56 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 <script>
 emailjs.init("q2bR1Di9tLcJVoIcQ"); // Public Key
 
+// Show/hide service-specific fields
+function toggleFields() {
+    const service = document.getElementById('serviceType').value;
+    const allFields = ['birthFields', 'deathFields', 'marriageFields', 'bankFields', 'insuranceFields'];
+    allFields.forEach(f => document.getElementById(f).style.display = 'none');
+
+    if(service === 'Birth Certificate') document.getElementById('birthFields').style.display = 'block';
+    else if(service === 'Death Certificate') document.getElementById('deathFields').style.display = 'block';
+    else if(service === 'Marriage Certificate') document.getElementById('marriageFields').style.display = 'block';
+    else if(service === 'Bank Account') document.getElementById('bankFields').style.display = 'block';
+    else if(service === 'Insurance Service') document.getElementById('insuranceFields').style.display = 'block';
+}
+
+document.getElementById('serviceType').addEventListener('change', toggleFields);
+
 document.getElementById("applicationForm").addEventListener("submit", function(e){
-e.preventDefault();
+    e.preventDefault();
 
-let service = document.getElementById("serviceType").value;
-let name = document.getElementById("name").value;
-let email = document.getElementById("email").value;
-let phone = document.getElementById("phone").value;
-let address = document.getElementById("address").value;
+    // Collect form data
+    let data = {
+        serviceType: document.getElementById('serviceType').value,
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        dob: document.getElementById('dob').value || '',
+        placeOfBirth: document.getElementById('placeOfBirth').value || '',
+        dod: document.getElementById('dod').value || '',
+        placeOfDeath: document.getElementById('placeOfDeath').value || '',
+        spouseName: document.getElementById('spouseName').value || '',
+        marriageDate: document.getElementById('marriageDate').value || '',
+        bankType: document.getElementById('bankType').value || '',
+        accountType: document.getElementById('accountType').value || '',
+        insuranceType: document.getElementById('insuranceType').value || '',
+        coverageAmount: document.getElementById('coverageAmount').value || '',
+        to_email: "Devendratanwar81@gmail.com",
+        subject: "New e-Mitra Application Submission"
+    };
 
-let message = `
-New Application Received:
-
-Service Type: ${service}
-Full Name: ${name}
-Email: ${email}
-Phone: ${phone}
-Address: ${address}
-`;
-
-emailjs.send("service_zyytoqi", "template_mbcun7u", {
-to_email: "Devendratanwar81@gmail.com",
-subject: "New e-Mitra Application Submission",
-message: message
-})
-.then(() => alert("Application submitted successfully! Email sent to Devendra."))
-.catch(err => {
-alert("Failed to send email. Please try again.");
-console.error(err);
-});
+    // Send email
+    emailjs.send("service_zyytoqi", "template_mbcun7u", data)
+    .then(() => {
+        alert("Application submitted successfully! Email sent to Devendra.");
+        document.getElementById("applicationForm").reset();
+        toggleFields();
+    })
+    .catch(err => {
+        alert("Failed to send email. Please try again.");
+        console.error(err);
+    });
 });
 </script>
 
