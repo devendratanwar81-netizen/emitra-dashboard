@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Mitra Dashboard - Rajasthan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7fa; }
+        .sidebar { background-color: #007bff; color: white; min-height: 100vh; width: 250px; position: fixed; padding-top: 20px; }
+        .sidebar .nav-link { color: white; padding: 12px 20px; font-size: 16px; }
+        .sidebar .nav-link:hover { background-color: #0056b3; }
+        .main-content { margin-left: 250px; padding: 20px; }
+        .header { background-color: white; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .card { border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: .3s; }
+        .card:hover { transform: translateY(-5px); }
+        .service-icon { font-size: 2rem; color: #007bff; margin-bottom: 10px; }
+        .profile-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; }
+        .footer { background-color: #343a40; color: white; text-align: center; padding: 10px; width: calc(100% - 250px); position: fixed; bottom: 0; }
+        .dynamic-fields { display: none; }
+    </style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h4 class="text-center mb-4">e-Mitra Panel</h4>
+    <ul class="nav flex-column">
+        <li><a class="nav-link" href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a class="nav-link" href="#services"><i class="fas fa-cogs"></i> Services</a></li>
+        <li><a class="nav-link" href="#profile"><i class="fas fa-user"></i> My Profile</a></li>
+        <li><a class="nav-link" href="#apply"><i class="fas fa-plus-circle"></i> Apply Now</a></li>
+        <li><a class="nav-link" href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+    </ul>
+</div>
+
+
+<!-- Main Content -->
+<div class="main-content">
+
+    <div class="header">
+        <h2>Welcome to e-Mitra Dashboard</h2>
+        <p>Manage your government services efficiently.</p>
+    </div>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="mt-4">
+        <div class="row">
+
+            <div class="col-md-8">
+                <h3>Quick Services</h3>
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="fas fa-birthday-cake service-icon"></i>
+                                <h5>Birth Certificate</h5>
+                                <button class="btn btn-primary btn-sm" onclick="loadService('birth')">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="fas fa-cross service-icon"></i>
+                                <h5>Death Certificate</h5>
+                                <button class="btn btn-primary btn-sm" onclick="loadService('death')">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="fas fa-ring service-icon"></i>
+                                <h5>Marriage Certificate</h5>
+                                <button class="btn btn-primary btn-sm" onclick="loadService('marriage')">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="fas fa-university service-icon"></i>
+                                <h5>Open Bank Account</h5>
+                                <button class="btn btn-primary btn-sm" onclick="loadService('bank')">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="fas fa-shield-alt service-icon"></i>
+                                <h5>Insurance Services</h5>
+                                <button class="btn btn-primary btn-sm" onclick="loadService('insurance')">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card profile-card">
+                    <div class="card-body text-center">
+                        <img src="https://emitra.rajasthan.gov.in/images/logo.png" width="80" height="80" class="mb-3">
+                        <h5>Devendra Singh Tanwar</h5>
+                        <p>ID: K110209004</p>
+                        <p>Services Used: 15</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <!-- Services Section -->
+    <section id="services" class="mt-5">
+        <h3>All Services</h3>
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card"><div class="card-body">
+                    <h5>Certificate Services</h5>
+                    <ul>
+                        <li>Birth Certificate</li>
+                        <li>Death Certificate</li>
+                        <li>Marriage Certificate</li>
+                    </ul>
+                </div></div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card"><div class="card-body">
+                    <h5>Banking & Insurance Services</h5>
+                    <ul>
+                        <li>Open Account with AU Bank</li>
+                        <li>Open Account with SBI</li>
+                        <li>Health Insurance</li>
+                        <li>Life Insurance</li>
+                        <li>Vehicle Insurance</li>
+                    </ul>
+                </div></div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <!-- Profile Section -->
+    <section id="profile" class="mt-5">
+        <h3>My Profile</h3>
+        <div class="card"><div class="card-body">
+            <div class="row">
+
+                <div class="col-md-4 text-center">
+                    <img src="https://emitra.rajasthan.gov.in/images/logo.png" width="100" height="100" class="mb-3">
+                </div>
+
+                <div class="col-md-8">
+                    <p><strong>Name:</strong> Devendra Singh Tanwar</p>
+                    <p><strong>Email:</strong> Devendratanwar81@gmail.com</p>
+                    <p><strong>ID:</strong> K110209004</p>
+                    <p><strong>Location:</strong> Sarund, Kotputli</p>
+                    <p><strong>Landmark:</strong> Near Police Station Sarund</p>
+                    <p><strong>Services Used:</strong> 15</p>
+
+                    <h5>Recent Activity</h5>
+                    <ul>
+                        <li>Applied for Birth Certificate - 2023-10-01</li>
+                        <li>Applied for Marriage Certificate - 2023-09-15</li>
+                    </ul>
+
+                    <button class="btn btn-success" onclick="editProfile()">Edit Profile</button>
+                </div>
+
+            </div>
+        </div></div>
+    </section>
+
+
+    <!-- Apply Section -->
+    <section id="apply" class="mt-5">
+        <h3>Apply for a Service</h3>
+
+        <div class="card"><div class="card-body">
+
+            <form id="applicationForm">
+
+                <div class="mb-3">
+                    <label class="form-label">Service Type</label>
+                    <select class="form-select" id="serviceType" required>
+                        <option value="">Select Service</option>
+                        <option value="birth">Birth Certificate</option>
+                        <option value="death">Death Certificate</option>
+                        <option value="marriage">Marriage Certificate</option>
+                        <option value="bank">Open Bank Account</option>
+                        <option value="insurance">Insurance Services</option>
+                    </select>
+                </div>
+
+                <!-- BANK FIELDS -->
+                <div id="bankFields" class="dynamic-fields">
+                    <div class="mb-3">
+                        <label class="form-label">Select Bank</label>
+                        <select class="form-select" id="bankType">
+                            <option value="">Select Bank</option>
+                            <option value="au">AU Small Finance Bank</option>
+                            <option value="sbi">State Bank of India (SBI)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Account Type</label>
+                        <select class="form-select" id="accountType">
+                            <option value="">Select Type</option>
+                            <option value="savings">Savings</option>
+                            <option value="current">Current</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- INSURANCE FIELDS -->
+                <div id="insuranceFields" class="dynamic-fields">
+                    <div class="mb-3">
+                        <label class="form-label">Insurance Type</label>
+                        <select class="form-select" id="insuranceType">
+                            <option value="">Select Type</option>
+                            <option value="health">Health Insurance</option>
+                            <option value="life">Life Insurance</option>
+                            <option value="vehicle">Vehicle Insurance</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Coverage Amount</label>
+                        <input type="number" class="form-control" id="coverageAmount" placeholder="e.g., 500000">
+                    </div>
+                </div>
+
+                <!-- Common Fields -->
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" value="Devendratanwar81@gmail.com" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input type="tel" class="form-control" id="phone" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <textarea class="form-control" id="address" rows="3" required></textarea>
+                </div>
+
+                <!-- Birth Fields -->
+                <div id="birthFields" class="dynamic-fields">
+                    <div class="mb-3">
+                        <label class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="dob">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Place of Birth</label>
+                        <input type="text" class="form-control" id="placeOfBirth">
+                    </div>
+                </div>
+
+                <!-- Death Fields -->
+                <div id="deathFields" class="dynamic-fields">
+                    <div class="mb-3">
+                        <label class="form-label">Date of Death</label>
+                        <input type="date" class="form-control" id="dod">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Place of Death</label>
+                        <input type="text" class="form-control" id="placeOfDeath">
+                    </div>
+                </div>
+
+                <!-- Marriage Fields -->
+                <div id="marriageFields" class="dynamic-fields">
+                    <div class="mb-3">
+                        <label class="form-label">Spouse Name</label>
+                        <input type="text" class="form-control" id="spouseName">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Marriage Date</label>
+                        <input type="date" class="form-control" id="marriageDate">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit Application</button>
+
+            </form>
+
+        </div></div>
+    </section>
+
+
+    <!-- Contact -->
+    <section id="contact" class="mt-5">
+        <h3>Contact Us</h3>
+        <div class="card"><div class="card-body">
+            <p>Visit Dev e-Mitra Center, Near Police Station Sarund, Sarund, Kotputli</p>
+            <p>Call: 7732827707 / 8690405858</p>
+            <p>Email: support@emitra.rajasthan.gov.in</p>
+        </div></div>
+    </section>
+
+</div>
+
+
+<!-- Footer -->
+<div class="footer">
+    <p>&copy; 2023 e-Mitra Rajasthan. Powered by Government of Rajasthan</p>
+</div>
+
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    emailjs.init("q2bR1Di9tLcJVoIcQ");
+
+    function loadService(service) {
+        document.getElementById('serviceType').value = service;
+        toggleFields();
+        document.getElementById('apply').scrollIntoView({ behavior: "smooth" });
+    }
+
+    function editProfile() {
+        alert('Profile edit mode activated.');
+    }
+
+    function toggleFields() {
+        const service = document.getElementById('serviceType').value;
+        const fields = ['bankFields', 'insuranceFields', 'birthFields', 'deathFields', 'marriageFields'];
+        fields.forEach(f => document.getElementById(f).style.display = 'none');
+
+        if (service === 'bank') document.getElementById('bankFields').style.display = 'block';
+        if (service === 'insurance') document.getElementById('insuranceFields').style.display = 'block';
+        if (service === 'birth') document.getElementById('birthFields').style.display = 'block';
+        if (service === 'death') document.getElementById('deathFields').style.display = 'block';
+        if (service === 'marriage') document.getElementById('marriageFields').style.display = 'block';
+    }
+
+    document.getElementById('serviceType').addEventListener('change', toggleFields);
+
+    document.getElementById('applicationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        let formData = new FormData(this);
+        let details = "";
+
+        for (let [key, value] of formData.entries()) {
+            details += `${key}: ${value}\n`;
+        }
+
+        emailjs.send("service_zyytoqi", "template_mbcun7u", {
+            to_email: "Devendratanwar81@gmail.com",
+            subject: "New e-Mitra Application Submission",
+            message: details
+        })
+        .then(() => alert("Application submitted successfully!"))
+        .catch(err => {
+            alert("Failed to send email.");
+            console.error(err);
+        });
+    });
+</script>
+
+</body>
+</html>
